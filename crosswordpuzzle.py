@@ -1,6 +1,6 @@
 import pygame
 from pygame import *
-
+'''
 def main():    
     while True: # main game loop
         for event in pygame.event.get(): # event handling loop
@@ -18,8 +18,17 @@ def main():
                 elif (event.key == K_n):
                     all_keys = pygame.key.get_pressed()
                     if all_keys[pygame.K_d] and all_keys[pygame.K_a]:
-                        modTools.easterEgg()
-                        modTools.setNewSpeed("UP",modTools.getSpeedIncrement())
-                        print(modTools.currentSpeedModifier)
+                        #modTools.easterEgg()
+                        #modTools.setNewSpeed("UP",modTools.getSpeedIncrement())
+                        # print(modTools.currentSpeedModifier)
                 elif event.key == K_ESCAPE:
                     terminate()
+                    '''
+help(pygame)
+pygame.init()
+for event in pygame.event.get():
+    help(pygame)
+    print(KEYDOWN)
+    print(event.key)
+    print(event)
+
