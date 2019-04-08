@@ -14,13 +14,13 @@ while True: # main game loop
 		elif event.type == MOUSEBUTTONDOWN:
 			print(pygame.mouse.get_pressed())
 		elif event.type == KEYDOWN:
-			if (event.key == K_LEFT or event.key == K_a)
+			if (event.key == K_LEFT or event.key == K_a):
 				print(event.key)
-			elif (event.key == K_RIGHT or event.key == K_d)
+			elif (event.key == K_RIGHT or event.key == K_d):
 				print(event.key)
-			elif (event.key == K_UP or event.key == K_w)
+			elif (event.key == K_UP or event.key == K_w):
 				print(event.key)
-			elif (event.key == K_DOWN or event.key == K_s)
+			elif (event.key == K_DOWN or event.key == K_s):
 				print(event.key)
 			elif (event.key == K_n):
 				all_keys = pygame.key.get_pressed()
