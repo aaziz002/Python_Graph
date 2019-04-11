@@ -25,6 +25,7 @@ class WordSet():
         self.found = 0
         self.level = 0
         self.advancement = 0
+        self.dictionary = enchant.Dict("en_us")
 
     def CheckReal(self):
 
@@ -40,11 +41,25 @@ class WordSet():
             if self.guess == x:
               return False
 
-        return True
+        if self.dictionary.check(self.guess) and len(self.guess)>=3:
+            self.attempts.append(self.guess)
+            self.found = self.found + 1
+            return True
+
+        return False
+
+    def Advance(self):
+        self.attempts.clear()
+        self.level = self.level+1
+        self.advancement = self.advancement+1
+        self.found = 0
+        if self.advancement >= 9:
+            self.find = self.find+1
+            self.advancement = 0
 
 
 
-dictionary = enchant.Dict("en_us")
+
 
 
 books= WordSet()
@@ -60,23 +75,15 @@ while books.level < len(books.words):
         print (books.words[books.level])
         books.guess = input("input word: ").lower()
 
-        if WordSet.CheckReal(books) and len(books.guess)>=3 and dictionary.check(books.guess):
+        if WordSet.CheckReal(books):
             system('cls')
-            books.attempts.append(books.guess)
             print("you found a word!")
-            books.found = books.found + 1
         else:
             system('cls')
 
     system('cls')
     print("Level Completed!")
-    books.attempts.clear()
-    books.level = books.level+1
-    books.advancement = books.advancement+1
-    books.found = 0
-    if books.advancement >= 9:
-        books.find = books.find+1
-        books.advancement = 0
+    WordSet.Advance(books)
 
 
 print("You have finished the game")
