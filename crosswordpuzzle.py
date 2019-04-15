@@ -2,6 +2,7 @@ import pygame, sys
 #import WordCrapes
 from pygame.locals import *
 
+<<<<<<< HEAD
 #global variables for animations and background
 FPS = 30
 WINDOWWIDTH = 1024
@@ -11,12 +12,18 @@ FOUND_LETTERS = 100
 BOARDWIDTH = 2
 BOARDHEIGHT = 3
 BGCOLOR= (100, 100, 100)
+=======
+FPS = 30
+
+>>>>>>> 68ce34f31ccd84dc4d7d66a5ad46a2ec23a42ede
 # Dummy function
 def doNothing():
     x = None
 
 def main():
+    global FPSCLOCK, DISPLAYSURF
     pygame.init()
+    FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((1024, 1000))
     pygame.display.set_caption('Word Puzzle Game')
     mainboard = GetRandomizedBoard()
@@ -35,6 +42,9 @@ def main():
                 position = (mouse_x, mouse_y)
             elif event.type == KEYDOWN:
                 button(event.key)
+                
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
 
 #This function can be keyed to anything we desire.
 def button(key):
