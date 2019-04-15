@@ -11,6 +11,7 @@ FOUND_LETTERS = 100
 BOARDWIDTH = 2
 BOARDHEIGHT = 3
 BGCOLOR= (100, 100, 100)
+fullscreen_is_on = False
 
 # Dummy function
 def doNothing():
@@ -57,6 +58,12 @@ def button(key):
         all_keys = pygame.key.get_pressed()
         if all_keys[pygame.K_RETURN]:
             print("screen change")
+            if(not(fullscreen_is_on)):
+                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.FULLSCREEN)
+                fullscreen_is_on = True
+            else:
+                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+                
     elif (key == K_q):
         doNothing()
     elif (key == K_e):
