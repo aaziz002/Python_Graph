@@ -2,9 +2,8 @@ import pygame, sys
 #import WordCrapes
 from pygame.locals import *
 
-<<<<<<< HEAD
 #global variables for animations and background
-FPS = 30
+FPS = 15
 WINDOWWIDTH = 1024
 WINDOWHEIGHT = 1000
 OPTION_LETTERS = 60
@@ -12,10 +11,7 @@ FOUND_LETTERS = 100
 BOARDWIDTH = 2
 BOARDHEIGHT = 3
 BGCOLOR= (100, 100, 100)
-=======
-FPS = 30
 
->>>>>>> 68ce34f31ccd84dc4d7d66a5ad46a2ec23a42ede
 # Dummy function
 def doNothing():
     x = None
@@ -24,7 +20,7 @@ def main():
     global FPSCLOCK, DISPLAYSURF
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
-    DISPLAYSURF = pygame.display.set_mode((1024, 1000))
+    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Word Puzzle Game')
     mainboard = GetRandomizedBoard()
     pygame.display.update()
