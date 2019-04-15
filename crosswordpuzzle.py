@@ -59,12 +59,14 @@ def button(key):
         all_keys = pygame.key.get_pressed()
         if all_keys[pygame.K_RETURN]:
             print("screen change")
-            if (fullscreen):
+            if (not(fullscreen)):  # if not fullscreen then switch to fullscreen
                 pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.display.FULLSCREEN)
                 fullscreen = True
-            else:
+                pygame.display.update()
+            else:   # if fullscreen the switch to not fullscreen
                 pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))                
                 fullscreen = False
+                pygame.display.update()
     elif (key == K_q):
         doNothing()
     elif (key == K_e):
