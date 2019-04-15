@@ -2,12 +2,16 @@ import pygame, sys
 #import WordCrapes
 from pygame.locals import *
 
+FPS = 30
+
 # Dummy function
 def doNothing():
     x = None
 
 def main():
+    global FPSCLOCK, DISPLAYSURF
     pygame.init()
+    FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((1024, 1000))
     
     while True: # main game loop
@@ -22,6 +26,9 @@ def main():
                 position = (mouse_x, mouse_y)
             elif event.type == KEYDOWN:
                 button(event.key)
+                
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
 
 #This function can be keyed to anything we desire.
 def button(key):
