@@ -8,7 +8,7 @@ def doNothing():
 
 def main():
     pygame.init()
-    DISPLAYSURF = pygame.display.set_mode((800, 600))
+    DISPLAYSURF = pygame.display.set_mode((1024, 1000))
     
     while True: # main game loop
         for event in pygame.event.get(): # event handling loop
