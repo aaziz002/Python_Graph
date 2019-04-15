@@ -60,7 +60,8 @@ def button(key):
         if all_keys[pygame.K_RETURN]:
             print("screen change")
             if (not(fullscreen)):  # if not fullscreen then switch to fullscreen
-                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.FULLSCREEN)
+                #pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.FULLSCREEN)
+                pygame.display.set_mode((0,0), pygame.FULLSCREEN)
                 fullscreen = True
                 pygame.display.update()
             else:   # if fullscreen the switch to not fullscreen
