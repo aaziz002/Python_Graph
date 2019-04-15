@@ -2,6 +2,15 @@ import pygame, sys
 #import WordCrapes
 from pygame.locals import *
 
+#global variables for animations and background
+FPS = 30
+WINDOWWIDTH = 1024
+WINDOWHEIGHT = 1000
+OPTION_LETTERS = 60
+FOUND_LETTERS = 100
+BOARDWIDTH = 2
+BOARDHEIGHT = 3
+BGCOLOR= (100, 100, 100)
 # Dummy function
 def doNothing():
     x = None
@@ -9,7 +18,11 @@ def doNothing():
 def main():
     pygame.init()
     DISPLAYSURF = pygame.display.set_mode((1024, 1000))
-    
+    pygame.display.set_caption('Word Puzzle Game')
+    mainboard = GetRandomizedBoard()
+    pygame.display.update()
+    displaysurf = BGCOLOR
+    DrawBoard()
     while True: # main game loop
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT:
@@ -106,6 +119,17 @@ def button(key):
 def terminate():
     pygame.quit()
     sys.exit()
-
+def GetRandomizedBoard():
+    icons = ["a","g","e","t","a", "a"]
+    board = []
+    for x in range(BOARDWIDTH):
+        column = []
+        for y in range(BOARDHEIGHT):
+            column.append(icons)
+            del icons[0] # remove the icons as we assign them
+        board.append(column)
+    return board
+def DrawBoard():
+    pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
 if __name__ == '__main__':
     main()
