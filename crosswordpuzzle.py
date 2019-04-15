@@ -11,7 +11,7 @@ FOUND_LETTERS = 100
 BOARDWIDTH = 2
 BOARDHEIGHT = 3
 BGCOLOR= (100, 100, 100)
-fullscreen_is_on = False
+
 
 # Dummy function
 def doNothing():
@@ -55,15 +55,16 @@ def button(key):
     elif (key == K_DOWN or key == K_s):
         doNothing()
     elif (key == K_LALT or K_RALT): # section for key combinations
+        fullscreen = False
         all_keys = pygame.key.get_pressed()
         if all_keys[pygame.K_RETURN]:
             print("screen change")
-            if(not(fullscreen_is_on)):
-                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.FULLSCREEN)
-                fullscreen_is_on = True
+            if (fullscreen):
+                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.display.FULLSCREEN)
+                fullscreen = True
             else:
-                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
-                
+                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))                
+                fullscreen = False
     elif (key == K_q):
         doNothing()
     elif (key == K_e):
@@ -132,6 +133,10 @@ def button(key):
 def terminate():
     pygame.quit()
     sys.exit()
+
+
+        
+
 def GetRandomizedBoard():
     icons = ["a","g","e","t","a", "a"]
     board = []
