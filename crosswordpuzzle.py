@@ -143,6 +143,7 @@ def GetRandomizedBoard():
         board.append(column)
     return board
 def DrawBoard():
-    pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
+    #temporarily commented out by Daniel pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
+    doNothing()
 if __name__ == '__main__':
     main()
