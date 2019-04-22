@@ -1,5 +1,5 @@
 import pygame, sys
-import WordCrapes
+from WordCrapes import *
 from pygame.locals import *
 
 #global variables for animations and background
@@ -141,14 +141,14 @@ def terminate():
 
 
 def GetRandomizedBoard():
-    words = WordSet()
-    icons = WordSet.words
+    word = WordSet()
+    icons = word.words
     random.shuffle(icons)
     board = []
     for x in range (400):
         column = []
         for y in range (BOARDHEIGHT):
-            column.append(icons[words.words[words.Level]])
+            column.append(word.words[1])
     return board
 def DrawBoard():
     #temporarily commented out by Daniel pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
