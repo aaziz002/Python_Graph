@@ -142,23 +142,14 @@ def terminate():
 
 
 def GetRandomizedBoard():
-<<<<<<< HEAD
     words = WordSet()
     icons = words.words
-=======
-    word = WordSet()
-    icons = word.words
->>>>>>> 101216a3999f9e513563733aaaf60b2c4267d7cb
     random.shuffle(icons)
     board = []
     for x in range (400):
         column = []
         for y in range (BOARDHEIGHT):
-<<<<<<< HEAD
             column.append(words.words[words.level])
-=======
-            column.append(word.words[1])
->>>>>>> 101216a3999f9e513563733aaaf60b2c4267d7cb
     return board
 
 if __name__ == '__main__':
