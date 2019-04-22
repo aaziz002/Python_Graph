@@ -39,7 +39,7 @@ def main():
                 position = (mouse_x, mouse_y)
             elif event.type == KEYDOWN:
                 button(event.key)
-                
+
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
@@ -61,11 +61,11 @@ def button(key):
             print("screen change")
             if (not(fullscreen)):  # if not fullscreen then switch to fullscreen
                 #pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.FULLSCREEN)
-                pygame.display.set_mode((0,0), pygame.FULLSCREEN))
+                pygame.display.set_mode((0,0), pygame.FULLSCREEN)
                 fullscreen = True
                 pygame.display.update()
             else:   # if fullscreen the switch to not fullscreen
-                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))                
+                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
                 fullscreen = False
                 pygame.display.update()
     elif (key == K_q):
@@ -138,7 +138,7 @@ def terminate():
     sys.exit()
 
 
-        
+
 
 def GetRandomizedBoard():
     icons = ["a","g","e","t","a", "a"]
