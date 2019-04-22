@@ -1,5 +1,5 @@
 import pygame, sys
-from WordCrapes import *
+#import WordCrapes
 from pygame.locals import *
 
 #global variables for animations and background
@@ -23,12 +23,19 @@ def main():
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Word Puzzle Game')
-    DISPLAYSURF.fill(BGCOLOR)
-    mainboard = GetRandomizedBoard(DISPLAYSURF)
-
+    mainboard = GetRandomizedBoard()
     pygame.display.update()
-
+    displaysurf = BGCOLOR
+    DrawBoard()
+    
     while True: # main game loop
+        introMenu(DISPLAYSURF)
+        
+        wordFont = pygame.font.SysFont('monospace', 12)
+        wordSurf = wordFont.render("test", True, (255,0,255))	
+        wordRect = wordSurf.get_rect()
+        DISPLAYSURF.blit(wordSurf,wordRect)
+                
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT:
                 terminate()
@@ -40,7 +47,7 @@ def main():
                 position = (mouse_x, mouse_y)
             elif event.type == KEYDOWN:
                 button(event.key)
-
+                
         pygame.display.update()
         FPSCLOCK.tick(FPS)
 
@@ -62,11 +69,11 @@ def button(key):
             print("screen change")
             if (not(fullscreen)):  # if not fullscreen then switch to fullscreen
                 #pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.FULLSCREEN)
-                pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+                pygame.display.set_mode((10,10), pygame.FULLSCREEN)
                 fullscreen = True
                 pygame.display.update()
-            else:   # if fullscreen the switch to not fullscreen
-                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+            else:   # if fullscreen then switch to not fullscreen
+                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))                
                 fullscreen = False
                 pygame.display.update()
     elif (key == K_q):
@@ -139,23 +146,42 @@ def terminate():
     sys.exit()
 
 
+def introMenu(DISPLAYSURF):
+    data = None
+    screen1 = True
+    screen2 = False
+    screen3 = False
+    word1 = "CROSSWORD"
+    word2 = ["P","U","Z","Z","L","E"]
+    WHITE = (255,255,255)
+    
+    FONTSIZE = int((WINDOWHEIGHT*0.06)*1.5)
+    SCOREPOSY = [0,FONTSIZE,FONTSIZE*2,FONTSIZE*3,FONTSIZE*4,FONTSIZE*5,FONTSIZE*6]
+    WORDLENGTH = 9
+    
+    wordFont = pygame.font.SysFont('monospace', FONTSIZE)
+	
+    wordSurf = wordFont.render(word1.rstrip('\n'), True, WHITE)	
+    
+    wordRect = wordSurf.get_rect()
+    #wordRect.topleft = (WINDOWWIDTH-WORDLENGTH,SCOREPOSY[0])
+    DISPLAYSURF.blit(wordSurf,wordRect)
+   # sleep(100) 
+  #  return True
+        
 
-
-def GetRandomizedBoard(DISPLAYSURF):
-    word = WordSet()
-    icons = word.words
-    random.shuffle(icons)
+def GetRandomizedBoard():
+    icons = ["a","g","e","t","a", "a"]
     board = []
-    for x in range (400):
+    for x in range(BOARDWIDTH):
         column = []
-        for y in range (BOARDHEIGHT):
-            font = pygame.font.sysfont('monospace', 10)
-            column.append(word.words[words.level])
-            printer = font.render(str(column),True,white)
-            rectangle = printer.get_rect()
-            DISPLAYSURF.blit(printer,rectangle)
-
+        for y in range(BOARDHEIGHT):
+            column.append(icons)
+            del icons[0] # remove the icons as we assign them
+        board.append(column)
     return board
-
+def DrawBoard():
+    #temporarily commented out by Daniel pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
+    doNothing()
 if __name__ == '__main__':
     main()
