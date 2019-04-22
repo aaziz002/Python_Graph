@@ -23,10 +23,11 @@ def main():
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Word Puzzle Game')
+    DISPLAYSURF.fill(BGCOLOR)
     mainboard = GetRandomizedBoard(DISPLAYSURF)
+
     pygame.display.update()
-    displaysurf = BGCOLOR
-    DrawBoard()
+
     while True: # main game loop
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT:
@@ -149,14 +150,12 @@ def GetRandomizedBoard(DISPLAYSURF):
         column = []
         for y in range (BOARDHEIGHT):
             font = pygame.font.sysfont('monospace', 10)
-            column.append(word.words[1])
+            column.append(word.words[words.level])
             printer = font.render(str(column),True,white)
             rectangle = printer.get_rect()
             DISPLAYSURF.blit(printer,rectangle)
 
     return board
-def DrawBoard():
-    #temporarily commented out by Daniel pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
-    doNothing()
+
 if __name__ == '__main__':
     main()
