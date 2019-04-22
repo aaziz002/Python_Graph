@@ -61,7 +61,7 @@ class WordSet():
 
 
 
-
+'''
 books= WordSet()
 _ = system('cls')
 while books.level < len(books.words):
@@ -69,7 +69,7 @@ while books.level < len(books.words):
         print("Level:", books.level+1)
         print("Words Found")
         for x in books.attempts:
-            print(x, end =" ")
+            print(x, end =" ")  #end thing takes out newline
         print("")
         print("Found - ", books.found)
         print (books.words[books.level])
@@ -87,4 +87,5 @@ while books.level < len(books.words):
 
 
 print("You have finished the game")
-'''system('pip uninstall pyenchant')'''
+system('pip uninstall pyenchant')
+'''
