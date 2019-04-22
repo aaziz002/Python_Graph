@@ -1,5 +1,5 @@
 import pygame, sys
-import WordCrapes
+from WordCrapes import *
 from pygame.locals import *
 
 #global variables for animations and background
@@ -23,10 +23,11 @@ def main():
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Word Puzzle Game')
+    DISPLAYSURF.fill(BGCOLOR)
     mainboard = GetRandomizedBoard()
+
     pygame.display.update()
-    displaysurf = BGCOLOR
-    DrawBoard()
+
     while True: # main game loop
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT:
@@ -142,16 +143,14 @@ def terminate():
 
 def GetRandomizedBoard():
     words = WordSet()
-    icons = WordSet.words
+    icons = words.words
     random.shuffle(icons)
     board = []
     for x in range (400):
         column = []
         for y in range (BOARDHEIGHT):
-            column.append(icons[words.words[words.Level]])
+            column.append(words.words[words.level])
     return board
-def DrawBoard():
-    #temporarily commented out by Daniel pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
-    doNothing()
+
 if __name__ == '__main__':
     main()
