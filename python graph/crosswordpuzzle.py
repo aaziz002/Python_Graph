@@ -1,15 +1,32 @@
 import pygame, sys
-#import WordCrapes
+import WordCrapes
 from pygame.locals import *
+
+#global variables for animations and background
+FPS = 15
+WINDOWWIDTH = 1024
+WINDOWHEIGHT = 1000
+OPTION_LETTERS = 60
+FOUND_LETTERS = 100
+BOARDWIDTH = 2
+BOARDHEIGHT = 3
+BGCOLOR= (100, 100, 100)
+
 
 # Dummy function
 def doNothing():
     x = None
 
 def main():
+    global FPSCLOCK, DISPLAYSURF
     pygame.init()
-    DISPLAYSURF = pygame.display.set_mode((800, 600))
-    
+    FPSCLOCK = pygame.time.Clock()
+    DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+    pygame.display.set_caption('Word Puzzle Game')
+    mainboard = GetRandomizedBoard()
+    pygame.display.update()
+    displaysurf = BGCOLOR
+    DrawBoard()
     while True: # main game loop
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT:
@@ -23,6 +40,9 @@ def main():
             elif event.type == KEYDOWN:
                 button(event.key)
 
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+
 #This function can be keyed to anything we desire.
 def button(key):
     #keyboard section
@@ -35,9 +55,19 @@ def button(key):
     elif (key == K_DOWN or key == K_s):
         doNothing()
     elif (key == K_LALT or K_RALT): # section for key combinations
+        fullscreen = False
         all_keys = pygame.key.get_pressed()
         if all_keys[pygame.K_RETURN]:
             print("screen change")
+            if (not(fullscreen)):  # if not fullscreen then switch to fullscreen
+                #pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT), pygame.FULLSCREEN)
+                pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+                fullscreen = True
+                pygame.display.update()
+            else:   # if fullscreen the switch to not fullscreen
+                pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
+                fullscreen = False
+                pygame.display.update()
     elif (key == K_q):
         doNothing()
     elif (key == K_e):
@@ -107,5 +137,21 @@ def terminate():
     pygame.quit()
     sys.exit()
 
+
+
+
+def GetRandomizedBoard():
+    words = WordSet()
+    icons = WordSet.words
+    random.shuffle(icons)
+    board = []
+    for x in range (400):
+        column = []
+        for y in range (BOARDHEIGHT):
+            column.append(icons[words.words[words.Level]])
+    return board
+def DrawBoard():
+    #temporarily commented out by Daniel pygame.draw.rect(DISPLAYSURF, BOXCOLOR, (left, top, BOXSIZE, BOXSIZE))
+    doNothing()
 if __name__ == '__main__':
     main()
