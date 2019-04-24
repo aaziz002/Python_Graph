@@ -71,28 +71,28 @@ class WordSet():
 
 
 '''
-books= WordSet()
-_ = system('cls')
-while books.level < len(books.words):
-    while books.found < books.find:
-        print("Level:", books.level+1)
-        print("Words Found")
-        for x in books.attempts:
-            print(x, end =" ")  #end thing takes out newline
-        print("")
-        print("Found - ", books.found)
-        print (books.words[books.level])
-        books.guess = input("input word: ").lower()
+    books= WordSet()
+    _ = system('cls')
+    while books.level < len(books.words):
+        while books.found < books.find:
+            print("Level:", books.level+1)
+            print("Words Found")
+            for x in books.attempts:
+                print(x, end =" ")  #end thing takes out newline
+            print("")
+            print("Found - ", books.found)
+            print (books.words[books.level])
+            books.guess = input("input word: ").lower()
 
-        if WordSet.CheckReal(books):
-            system('cls')
-            print("you found a word!")
-        else:
-            system('cls')
+            if WordSet.CheckReal(books):
+                system('cls')
+                print("you found a word!")
+            else:
+                system('cls')
 
-    system('cls')
-    print("Level Completed!")
-    WordSet.Advance(books)
+        system('cls')
+        print("Level Completed!")
+        WordSet.Advance(books)
 
 
 print("You have finished the game")

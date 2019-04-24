@@ -24,7 +24,7 @@ def main():
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Word Puzzle Game')
     DISPLAYSURF.fill(BGCOLOR)
-    mainboard = GetRandomizedBoard(DISPLAYSURF)
+    mainboard = GetRandomizedBoard(DISPLAYSURF,0)
 
     pygame.display.update()
 
@@ -141,20 +141,18 @@ def terminate():
 
 
 
-def GetRandomizedBoard(DISPLAYSURF):
+def GetRandomizedBoard(DISPLAYSURF,index):
     color = (0,200,0,0.75)
     word = WordSet()
     board = []
-    for x in range (len(word.words)):
-        icons = word.words[x]
-        random.shuffle(icons)
-        j= 0
+    icons = word.words[index]
+    random.shuffle(icons)
+    for x in range (len(word.words[index])):
         font = pygame.font.SysFont('monospace', 35, True)
-        printer = font.render(word.GetString(x),True,color)
+        printer = font.render(word.words[index][x],True,color)
         rectangle = printer.get_rect()
-        rectangle.topleft = (10,x*35)
+        rectangle.topleft = (x*25,30)
         DISPLAYSURF.blit(printer,rectangle)
-        j+=1
 
 
     return board
