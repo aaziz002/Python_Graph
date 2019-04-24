@@ -62,6 +62,7 @@ class WordSet():
         for x in self.words[index]:
             TheString += x + ", "
         TheString = TheString.rstrip(" ,")
+        print(self.words[0])
         return TheString
 
 

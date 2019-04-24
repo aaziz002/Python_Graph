@@ -144,10 +144,10 @@ def terminate():
 def GetRandomizedBoard(DISPLAYSURF):
     color = (0,200,0,0.75)
     word = WordSet()
-    icons = word.words
-    random.shuffle(icons)
     board = []
-    for x in range (10):
+    for x in range (len(word.words)):
+        icons = word.words[x]
+        random.shuffle(icons)
         j= 0
         font = pygame.font.SysFont('monospace', 35, True)
         printer = font.render(word.GetString(x),True,color)
