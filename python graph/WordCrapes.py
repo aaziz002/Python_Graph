@@ -57,6 +57,12 @@ class WordSet():
             self.find = self.find+1
             self.advancement = 0
 
+    def GetString(self,index):
+        for x in self.words[index]:
+            TheString += x
+        return TheString
+
+
 
 
 
