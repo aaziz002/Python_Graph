@@ -4,20 +4,116 @@ from pygame.locals import *
 
 #global variables for animations and background
 FPS = 15
-WINDOWWIDTH = 1024
-WINDOWHEIGHT = 1000
+WINDOWWIDTH   = 1024
+WINDOWHEIGHT  = 1000
 OPTION_LETTERS = 60
 FOUND_LETTERS = 100
-BOARDWIDTH = 2
-BOARDHEIGHT = 3
-BGCOLOR= (100, 100, 100)
-
+BOARDWIDTH    = 2
+BOARDHEIGHT   = 3
+BGCOLOR       = (100, 100, 100)
+LIGHTWHITE    = (128,128,128)
 
 # Dummy function
 def doNothing():
     x = None
+    
+# High Score File functionality
+def scorefile_reset():
+    numberList = ["0\n","0\n","0\n"]
+    file = open("highscore.txt", "w+")
+    file.writelines(numberList)
+    file.close()
+
+def validFileCheck():
+    try:
+        file = open("highscore.txt", "r")
+        file.close()
+    except IOError:
+        scorefile_reset()
+
+# load highscore list from highscore.txt and display top 3 scores to start screen
+    
+def drawHighScore(DISPLAYSURF, WINDOWWIDTH, WINDOWHEIGHT):
+    FONTSIZE = int((WINDOWHEIGHT*0.06)*1.5), int(WINDOWHEIGHT*0.06)
+    SCORELENGTH = None
+    SCOREPOSY = [0,FONTSIZE[0],FONTSIZE[0]*2]
+    NUMBEROFSCORES = 3
+    
+    validFileCheck()
+    highScore_file = open("highscore.txt", "r")
+    scoreList = highScore_file.readlines()
+    SCORELENGTH = len(scoreList[0])
+    highScore_file.close()
+    
+    highScoreFont = pygame.font.SysFont('monospace', FONTSIZE[0]), pygame.font.SysFont('monospace', FONTSIZE[1])
+    
+    for score in range(NUMBEROFSCORES):
+        if score == 0:
+            highScoreSurf = highScoreFont[0].render(scoreList[score].rstrip('\n'), True, LIGHTWHITE)
+        else:
+            highScoreSurf = highScoreFont[1].render(scoreList[score].rstrip('\n'), True, LIGHTWHITE)
+        
+        highScoreRect = highScoreSurf.get_rect()
+        highScoreRect.topright = (WINDOWWIDTH-SCORELENGTH,SCOREPOSY[score])
+        DISPLAYSURF.blit(highScoreSurf,highScoreRect)
+
+# if new high score
+# 	update highscore list with new highscore
+
+def loadHighScoreList():
+    validFileCheck()
+    scoreList = []
+    file = open("highscore.txt", "r")
+    scoreList.append(file.readline())
+    scoreList.append(file.readline())
+    scoreList.append(file.readline())
+    file.close()
+
+def updateNewHighScoreAndPos(self, score, pos):
+    newScorePos = [score,(pos-1)]
+
+def getNewScoreAndPosition():
+    return newScorePos
+
+def updateHighScoreList(scoreList):
+    newScore, position = getNewScoreAndPosition()
+    scoreList[position] = str(newScore) + "\n"
+    file = open("highscore.txt", "w+")
+    file.writelines(scoreList)
+    file.close()
+    
+def isHighScore(newScore, scoreList):
+    loadHighScoreList()
+    topScore = int(scoreList[0])
+    middleScore = int(scoreList[1])
+    bottomScore = int(scoreList[2])
+    
+    if not(
+        newScore == topScore or
+        newScore == middleScore or
+        newScore == bottomScore
+    ):
+        if newScore > topScore:
+            updateNewHighScoreAndPos(newScore, 1)
+            updateHighScoreList(scoreList)
+            return True
+        elif newScore > middleScore:
+            updateNewHighScoreAndPos(newScore, 2)
+            updateHighScoreList(scoreList)
+            return True
+        elif newScore > bottomScore:
+            updateNewHighScoreAndPos(newScore, 3)
+            updateHighScoreList(scoreList)
+            return True
+        else:
+            return False
+    else:
+        return False
+    
+
 
 def main():
+    validFileCheck()
     global FPSCLOCK, DISPLAYSURF
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
@@ -35,7 +131,6 @@ def main():
             if event.type == QUIT:
                 terminate()
             elif event.type == MOUSEBUTTONDOWN:
-                #print(pygame.mouse.get_pressed())
                 button(pygame.mouse.get_pressed())
             elif event.type == MOUSEMOTION: #tracks the  mouse position
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -43,8 +138,11 @@ def main():
             elif event.type == KEYDOWN:
                 button(event.key)
 
+        didWin = False
+        gameOver(DISPLAYSURF, FPSCLOCK, didWin)
         pygame.display.update()
         FPSCLOCK.tick(FPS)
+        main()
 
 #This function can be keyed to anything we desire.
 def button(key):
@@ -186,6 +284,53 @@ def introMenu(DISPLAYSURF, FPSCLOCK):
             wordIncr += 1
 
         drawPressKeyMsg()
+
+        if checkForKeyPress():
+            pygame.event.get() # clear event queue
+            return
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+
+def gameOver(DISPLAYSURF, FPSCLOCK, didWin):
+    word1 = "GAME"
+    word2 = "OVER"
+    word3 = "YOU"
+    word4 = "WIN!"
+    WHITE = (255,255,255)
+    
+    FONTSIZE = int((WINDOWHEIGHT*0.08)*1.5)
+    LETTERPOSY = [0,FONTSIZE,FONTSIZE*2,FONTSIZE*3,FONTSIZE*4,FONTSIZE*5,FONTSIZE*6]
+    WORDLENGTH = 9
+    
+    BGCOLOR = (0,0,0)
+    while True:
+        if not(didWin):
+            DISPLAYSURF.fill(BGCOLOR)
+            wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
+            wordSurf = wordFont.render(word1, True, WHITE)	
+            wordRect = wordSurf.get_rect()    
+            DISPLAYSURF.blit(wordSurf,wordRect)
+
+            wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
+            wordSurf = wordFont.render("         " + word2, True, WHITE)	
+            wordRect = wordSurf.get_rect()
+            wordRect.topleft = (0,LETTERPOSY[3])    
+            DISPLAYSURF.blit(wordSurf,wordRect)
+        else:
+            DISPLAYSURF.fill(BGCOLOR)
+            wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
+            wordSurf = wordFont.render(word3, True, WHITE)	
+            wordRect = wordSurf.get_rect()
+            DISPLAYSURF.blit(wordSurf,wordRect)
+
+            wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
+            wordSurf = wordFont.render("         " + word4, True, WHITE)	
+            wordRect = wordSurf.get_rect()    
+            wordRect.topleft = (0,LETTERPOSY[3])
+            DISPLAYSURF.blit(wordSurf,wordRect)
+        
+        drawPressKeyMsg()
+        drawHighScore(DISPLAYSURF, WINDOWWIDTH, WINDOWHEIGHT)
 
         if checkForKeyPress():
             pygame.event.get() # clear event queue
