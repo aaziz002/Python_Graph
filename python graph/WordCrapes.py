@@ -19,6 +19,7 @@ class WordSet():
                       ["d","o","x","n","u","t"],
                       ["s","m","w","a"],
                       ["u","q","i","t","l"]]
+        self.position = [(0,0)]
         self.attempts = []
         self.guess = "Rabbit"
         self.find = 3
@@ -26,6 +27,14 @@ class WordSet():
         self.level = 0
         self.advancement = 0
         self.dictionary = enchant.Dict("en_us")
+
+    def GetLetter(y):
+
+        for x in self.position:
+            if ((x[0] > y[0]-5 or x[0] < y[0]+5) and (x[1] > y[1]-5 or x[1] < y[1]+5)):
+                return self.words[self.level][x]
+        return False
+
 
     def CheckReal(self):
 

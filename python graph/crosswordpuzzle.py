@@ -127,10 +127,14 @@ def main():
     DISPLAYSURF.fill((12,0,128))
 
     while True: # main game loop
+        #GetRandomizedBoard(DISPLAYSURF,0)
+
         for event in pygame.event.get(): # event handling loop
+
             if event.type == QUIT:
                 terminate()
             elif event.type == MOUSEBUTTONDOWN:
+                getLetter(pygame.mouse.get_pos())
                 button(pygame.mouse.get_pressed())
             elif event.type == MOUSEMOTION: #tracks the  mouse position
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -138,7 +142,11 @@ def main():
             elif event.type == KEYDOWN:
                 button(event.key)
 
-
+        didWin = None
+        gameOver(DISPLAYSURF, FPSCLOCK, didWin)
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
+        main()
 
 #This function can be keyed to anything we desire.
 def button(key):
@@ -346,16 +354,11 @@ def GetRandomizedBoard(DISPLAYSURF,index):
         font = pygame.font.SysFont('monospace', 35, True)
         printer = font.render(word.words[index][x],True,color)
         rectangle = printer.get_rect()
-        rectangle.topleft = (x*25,30)
+        rectangle.center = ((x*25),30)
+        word.position.append(((x*25),30))
         DISPLAYSURF.blit(printer,rectangle)
 
-def didWin():
-    gameOver(DISPLAYSURF, FPSCLOCK, didWin)
     pygame.display.update()
-    FPSCLOCK.tick(FPS)
-    main()
-
-    return board
 
 if __name__ == '__main__':
     main()
