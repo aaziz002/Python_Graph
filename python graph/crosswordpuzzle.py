@@ -69,7 +69,7 @@ def loadHighScoreList():
     scoreList.append(file.readline())
     file.close()
 
-def updateNewHighScoreAndPos(self, score, pos):
+def updateNewHighScoreAndPos(score, pos):
     newScorePos = [score,(pos-1)]
 
 def getNewScoreAndPosition():
@@ -284,6 +284,7 @@ def introMenu(DISPLAYSURF, FPSCLOCK):
             wordIncr += 1
 
         drawPressKeyMsg()
+        drawHighScore(DISPLAYSURF, WINDOWWIDTH, WINDOWHEIGHT)
 
         if checkForKeyPress():
             pygame.event.get() # clear event queue
