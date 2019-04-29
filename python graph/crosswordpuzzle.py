@@ -23,11 +23,13 @@ def main():
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Word Puzzle Game')
-    DISPLAYSURF.fill(BGCOLOR)
     mainboard = GetRandomizedBoard(DISPLAYSURF,0)
 
     pygame.display.update()
-
+    
+    introMenu(DISPLAYSURF,FPSCLOCK)
+    DISPLAYSURF.fill((12,0,128))
+    
     while True: # main game loop
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT:
@@ -138,7 +140,58 @@ def terminate():
     pygame.quit()
     sys.exit()
 
+def drawPressKeyMsg():
+    MILDWHITE = (128,128,128)
+    wordFont = pygame.font.SysFont('monospace', 12)
+    pressKeySurf = wordFont.render('Press a key to play.', True, MILDWHITE)
+    pressKeyRect = pressKeySurf.get_rect()
+    pressKeyRect.topleft = (0,0)
+    DISPLAYSURF.blit(pressKeySurf, pressKeyRect)
 
+def checkForKeyPress():
+    if len(pygame.event.get(QUIT)) > 0:
+        terminate()
+
+    keyUpEvents = pygame.event.get(KEYUP)
+    if len(keyUpEvents) == 0:
+        return None
+    if keyUpEvents[0].key == K_ESCAPE:
+        terminate()
+    return keyUpEvents[0].key
+
+def introMenu(DISPLAYSURF, FPSCLOCK):
+    word1 = "CROSSWORD"
+    word2 = ["P","U","Z","Z","L","E"]
+    WHITE = (255,255,255)
+    
+    FONTSIZE = int((WINDOWHEIGHT*0.08)*1.5)
+    LETTERPOSY = [0,FONTSIZE,FONTSIZE*2,FONTSIZE*3,FONTSIZE*4,FONTSIZE*5,FONTSIZE*6]
+    WORDLENGTH = 9
+    
+    BGCOLOR = (0,0,0)
+    while True:
+        DISPLAYSURF.fill(BGCOLOR)
+        wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
+        wordSurf = wordFont.render(word1, True, WHITE)	
+        wordRect = wordSurf.get_rect()    
+        DISPLAYSURF.blit(wordSurf,wordRect)
+
+        wordIncr = 0
+        posIncr = 1
+        for letter in word2:
+            wordRect.topleft = (5, LETTERPOSY[posIncr])
+            wordSurf = wordFont.render('     ' + word2[wordIncr], True, WHITE)
+            DISPLAYSURF.blit(wordSurf,wordRect)
+            posIncr += 1
+            wordIncr += 1
+
+        drawPressKeyMsg()
+
+        if checkForKeyPress():
+            pygame.event.get() # clear event queue
+            return
+        pygame.display.update()
+        FPSCLOCK.tick(FPS)
 
 
 def GetRandomizedBoard(DISPLAYSURF,index):
