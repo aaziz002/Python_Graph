@@ -16,7 +16,7 @@ LIGHTWHITE    = (128,128,128)
 # Dummy function
 def doNothing():
     x = None
-    
+
 # High Score File functionality
 def scorefile_reset():
     numberList = ["0\n","0\n","0\n"]
@@ -32,27 +32,27 @@ def validFileCheck():
         scorefile_reset()
 
 # load highscore list from highscore.txt and display top 3 scores to start screen
-    
+
 def drawHighScore(DISPLAYSURF, WINDOWWIDTH, WINDOWHEIGHT):
     FONTSIZE = int((WINDOWHEIGHT*0.06)*1.5), int(WINDOWHEIGHT*0.06)
     SCORELENGTH = None
     SCOREPOSY = [0,FONTSIZE[0],FONTSIZE[0]*2]
     NUMBEROFSCORES = 3
-    
+
     validFileCheck()
     highScore_file = open("highscore.txt", "r")
     scoreList = highScore_file.readlines()
     SCORELENGTH = len(scoreList[0])
     highScore_file.close()
-    
+
     highScoreFont = pygame.font.SysFont('monospace', FONTSIZE[0]), pygame.font.SysFont('monospace', FONTSIZE[1])
-    
+
     for score in range(NUMBEROFSCORES):
         if score == 0:
             highScoreSurf = highScoreFont[0].render(scoreList[score].rstrip('\n'), True, LIGHTWHITE)
         else:
             highScoreSurf = highScoreFont[1].render(scoreList[score].rstrip('\n'), True, LIGHTWHITE)
-        
+
         highScoreRect = highScoreSurf.get_rect()
         highScoreRect.topright = (WINDOWWIDTH-SCORELENGTH,SCOREPOSY[score])
         DISPLAYSURF.blit(highScoreSurf,highScoreRect)
@@ -81,13 +81,13 @@ def updateHighScoreList(scoreList):
     file = open("highscore.txt", "w+")
     file.writelines(scoreList)
     file.close()
-    
+
 def isHighScore(newScore, scoreList):
     loadHighScoreList()
     topScore = int(scoreList[0])
     middleScore = int(scoreList[1])
     bottomScore = int(scoreList[2])
-    
+
     if not(
         newScore == topScore or
         newScore == middleScore or
@@ -109,7 +109,7 @@ def isHighScore(newScore, scoreList):
             return False
     else:
         return False
-    
+
 
 
 def main():
@@ -122,10 +122,10 @@ def main():
     mainboard = GetRandomizedBoard(DISPLAYSURF,0)
 
     pygame.display.update()
-    
+
     introMenu(DISPLAYSURF,FPSCLOCK)
     DISPLAYSURF.fill((12,0,128))
-    
+
     while True: # main game loop
         for event in pygame.event.get(): # event handling loop
             if event.type == QUIT:
@@ -138,11 +138,7 @@ def main():
             elif event.type == KEYDOWN:
                 button(event.key)
 
-        didWin = False
-        gameOver(DISPLAYSURF, FPSCLOCK, didWin)
-        pygame.display.update()
-        FPSCLOCK.tick(FPS)
-        main()
+
 
 #This function can be keyed to anything we desire.
 def button(key):
@@ -261,17 +257,17 @@ def introMenu(DISPLAYSURF, FPSCLOCK):
     word1 = "CROSSWORD"
     word2 = ["P","U","Z","Z","L","E"]
     WHITE = (255,255,255)
-    
+
     FONTSIZE = int((WINDOWHEIGHT*0.08)*1.5)
     LETTERPOSY = [0,FONTSIZE,FONTSIZE*2,FONTSIZE*3,FONTSIZE*4,FONTSIZE*5,FONTSIZE*6]
     WORDLENGTH = 9
-    
+
     BGCOLOR = (0,0,0)
     while True:
         DISPLAYSURF.fill(BGCOLOR)
         wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
-        wordSurf = wordFont.render(word1, True, WHITE)	
-        wordRect = wordSurf.get_rect()    
+        wordSurf = wordFont.render(word1, True, WHITE)
+        wordRect = wordSurf.get_rect()
         DISPLAYSURF.blit(wordSurf,wordRect)
 
         wordIncr = 0
@@ -298,38 +294,38 @@ def gameOver(DISPLAYSURF, FPSCLOCK, didWin):
     word3 = "YOU"
     word4 = "WIN!"
     WHITE = (255,255,255)
-    
+
     FONTSIZE = int((WINDOWHEIGHT*0.08)*1.5)
     LETTERPOSY = [0,FONTSIZE,FONTSIZE*2,FONTSIZE*3,FONTSIZE*4,FONTSIZE*5,FONTSIZE*6]
     WORDLENGTH = 9
-    
+
     BGCOLOR = (0,0,0)
     while True:
         if not(didWin):
             DISPLAYSURF.fill(BGCOLOR)
             wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
-            wordSurf = wordFont.render(word1, True, WHITE)	
-            wordRect = wordSurf.get_rect()    
+            wordSurf = wordFont.render(word1, True, WHITE)
+            wordRect = wordSurf.get_rect()
             DISPLAYSURF.blit(wordSurf,wordRect)
 
             wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
-            wordSurf = wordFont.render("         " + word2, True, WHITE)	
+            wordSurf = wordFont.render("         " + word2, True, WHITE)
             wordRect = wordSurf.get_rect()
-            wordRect.topleft = (0,LETTERPOSY[3])    
+            wordRect.topleft = (0,LETTERPOSY[3])
             DISPLAYSURF.blit(wordSurf,wordRect)
         else:
             DISPLAYSURF.fill(BGCOLOR)
             wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
-            wordSurf = wordFont.render(word3, True, WHITE)	
+            wordSurf = wordFont.render(word3, True, WHITE)
             wordRect = wordSurf.get_rect()
             DISPLAYSURF.blit(wordSurf,wordRect)
 
             wordFont = pygame.font.SysFont('monospace', FONTSIZE, True)
-            wordSurf = wordFont.render("         " + word4, True, WHITE)	
-            wordRect = wordSurf.get_rect()    
+            wordSurf = wordFont.render("         " + word4, True, WHITE)
+            wordRect = wordSurf.get_rect()
             wordRect.topleft = (0,LETTERPOSY[3])
             DISPLAYSURF.blit(wordSurf,wordRect)
-        
+
         drawPressKeyMsg()
         drawHighScore(DISPLAYSURF, WINDOWWIDTH, WINDOWHEIGHT)
 
@@ -353,6 +349,11 @@ def GetRandomizedBoard(DISPLAYSURF,index):
         rectangle.topleft = (x*25,30)
         DISPLAYSURF.blit(printer,rectangle)
 
+def didWin():
+    gameOver(DISPLAYSURF, FPSCLOCK, didWin)
+    pygame.display.update()
+    FPSCLOCK.tick(FPS)
+    main()
 
     return board
 
