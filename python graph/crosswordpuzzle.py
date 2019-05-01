@@ -128,7 +128,8 @@ def main():
 
     while True: # main game loop
         #GetRandomizedBoard(DISPLAYSURF,0)
-
+        if "yes" == input("game over? "):  #needs: To be replaced with a game over true or false condition
+            isGameOver = True
         for event in pygame.event.get(): # event handling loop
 
             if event.type == QUIT:
@@ -143,10 +144,11 @@ def main():
                 button(event.key)
 
         didWin = None
-        gameOver(DISPLAYSURF, FPSCLOCK, didWin)
+        if isGameOver:
+            gameOver(DISPLAYSURF, FPSCLOCK, didWin)
         pygame.display.update()
         FPSCLOCK.tick(FPS)
-        main()
+        #main()
 
 #This function can be keyed to anything we desire.
 def button(key):
@@ -339,6 +341,7 @@ def gameOver(DISPLAYSURF, FPSCLOCK, didWin):
 
         if checkForKeyPress():
             pygame.event.get() # clear event queue
+            main()
             return
         pygame.display.update()
         FPSCLOCK.tick(FPS)
