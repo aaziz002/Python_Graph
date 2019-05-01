@@ -65,13 +65,15 @@ class WordSet():
         if self.advancement >= 9:
             self.find = self.find+1
             self.advancement = 0
+            endGame = "yes"
+            return endGame
 
     def GetString(self,index):
         TheString=""
         for x in self.words[index]:
             TheString += x + ", "
         TheString = TheString.rstrip(" ,")
-        print(self.words[0])
+        print(self.words[index])
         return TheString
 
 

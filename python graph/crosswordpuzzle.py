@@ -119,23 +119,26 @@ def main():
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
     pygame.display.set_caption('Word Puzzle Game')
-    mainboard = GetRandomizedBoard(DISPLAYSURF,0)
 
     pygame.display.update()
-
+    i = 1
     introMenu(DISPLAYSURF,FPSCLOCK)
-    DISPLAYSURF.fill((12,0,128))
-
+    DISPLAYSURF.fill(BGCOLOR)
+    #GetRandomizedBoard(DISPLAYSURF,0)
     while True: # main game loop
-        #GetRandomizedBoard(DISPLAYSURF,0)
-        if "yes" == input("game over? "):  #needs: To be replaced with a game over true or false condition
+        if i == 1:
+            GetRandomizedBoard(DISPLAYSURF,0)
+            i += 1
+        isGameOver = False
+        endGame = "NO"
+        if endGame == "yes":
             isGameOver = True
         for event in pygame.event.get(): # event handling loop
 
             if event.type == QUIT:
                 terminate()
             elif event.type == MOUSEBUTTONDOWN:
-                getLetter(pygame.mouse.get_pos())
+                #getLetter(pygame.mouse.get_pos())
                 button(pygame.mouse.get_pressed())
             elif event.type == MOUSEMOTION: #tracks the  mouse position
                 mouse_x, mouse_y = pygame.mouse.get_pos()
