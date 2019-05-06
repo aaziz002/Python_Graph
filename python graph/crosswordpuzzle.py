@@ -1,3 +1,7 @@
+#from os import system
+#system('pip install pygame')
+#system('pip install pyenchant')
+
 import pygame, sys
 from WordCrapes import *
 from pygame.locals import *
@@ -110,7 +114,7 @@ def isHighScore(newScore, scoreList):
     else:
         return False
 
-
+word = WordSet()
 
 def main():
     validFileCheck()
@@ -127,7 +131,7 @@ def main():
     #GetRandomizedBoard(DISPLAYSURF,0)
     while True: # main game loop
         if i == 1:
-            GetRandomizedBoard(DISPLAYSURF,0)
+            GetRandomizedBoard(DISPLAYSURF,word.level)
             i += 1
         isGameOver = False
         endGame = "NO"
@@ -137,8 +141,15 @@ def main():
 
             if event.type == QUIT:
                 terminate()
-            elif event.type == MOUSEBUTTONDOWN:
-                #getLetter(pygame.mouse.get_pos())
+            elif event.type == MOUSEBUTTONDOWN and word.GetLetter(pygame.mouse.get_pos()) != False:
+                print(word.guess)
+
+            elif event.type == MOUSEBUTTONDOWN and word.CheckButton(pygame.mouse.get_pos()):
+                if word.CheckReal():
+                    word.Advance()
+                    DISPLAYSURF.fill(BGCOLOR)
+                    GetRandomizedBoard(DISPLAYSURF,word.level)
+                #word.GetLetter(pygame.mouse.get_pos())
                 button(pygame.mouse.get_pressed())
             elif event.type == MOUSEMOTION: #tracks the  mouse position
                 mouse_x, mouse_y = pygame.mouse.get_pos()
@@ -352,7 +363,6 @@ def gameOver(DISPLAYSURF, FPSCLOCK, didWin):
 
 def GetRandomizedBoard(DISPLAYSURF,index):
     color = (0,200,0,0.75)
-    word = WordSet()
     board = []
     icons = word.words[index]
     random.shuffle(icons)
@@ -360,9 +370,16 @@ def GetRandomizedBoard(DISPLAYSURF,index):
         font = pygame.font.SysFont('monospace', 35, True)
         printer = font.render(word.words[index][x],True,color)
         rectangle = printer.get_rect()
-        rectangle.center = ((x*25),30)
-        word.position.append(((x*25),30))
+        rectangle.center = ((x*25)+25,30)
+        word.position.append(((x*25)+25,30))
         DISPLAYSURF.blit(printer,rectangle)
+
+    font = pygame.font.SysFont('monospace', 35, True)
+    printer = font.render("Check",True,color)
+    rectangle = printer.get_rect()
+    rectangle.center = (50, 100)
+    word.button=(50, 100)
+    DISPLAYSURF.blit(printer,rectangle)
 
     pygame.display.update()
 

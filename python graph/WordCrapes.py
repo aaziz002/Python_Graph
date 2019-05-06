@@ -20,23 +20,36 @@ class WordSet():
                       ["s","m","w","a"],
                       ["u","q","i","t","l"]]
         self.position = [(0,0)]
+        self.button = [(0,0)]
         self.attempts = []
-        self.guess = "Rabbit"
+        self.guess = ""
         self.find = 3
         self.found = 0
         self.level = 0
         self.advancement = 0
         self.dictionary = enchant.Dict("en_us")
 
-    def GetLetter(y):
-
+    def GetLetter(self,y):
+        c=0
         for x in self.position:
-            if ((x[0] > y[0]-5 or x[0] < y[0]+5) and (x[1] > y[1]-5 or x[1] < y[1]+5)):
-                return self.words[self.level][x]
+            if ((x[0] > y[0]-15 and x[0] < y[0]+15) and (x[1] > y[1]-10 and x[1] < y[1]+10)):
+                self.guess+=self.words[self.level][c-1]
+                #self.guess = self.guess.rstrip()
+                #print(5)
+                #print (self.guess)
+                return self.words[self.level][c-1]
+            c= c+1
         return False
 
+    def CheckButton(self,y):
+        if ((self.button[0] > y[0]-50 and self.button[0] < y[0]+50) and (self.button[1] > y[1]-10 and self.button[1] < y[1]+10)):
+            return True
+        return False
 
     def CheckReal(self):
+
+        if self.guess == "":
+            return False
 
         for x in self.guess:
             passes = False
@@ -44,17 +57,20 @@ class WordSet():
                 if x == y:
                     passes = True
             if passes == False:
+                self.guess = ""
                 return False
 
         for x in self.attempts:
             if self.guess == x:
-              return False
+                self.guess = ""
+                return False
 
         if self.dictionary.check(self.guess) and len(self.guess)>=3:
             self.attempts.append(self.guess)
             self.found = self.found + 1
+            self.guess = ""
             return True
-
+        self.guess = ""
         return False
 
     def Advance(self):
